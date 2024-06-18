@@ -10,11 +10,8 @@ abstract class Usecase
     private Output $output;
     private Input $input;
 
-    public function __construct(){
+    public function __construct(Input $input){
         $this->output = new Output();
-    }
-
-    final public function setInput(Input $input): void {
         $this->input = $input;
     }
 
