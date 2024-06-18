@@ -1,6 +1,6 @@
 <?php
 
-namespace MechtaMarket\PhpEnhance\Utils;
+namespace MechtaMarket\PhpEnhance\Base;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
