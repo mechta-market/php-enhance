@@ -4,5 +4,13 @@ namespace MechtaMarket\PhpEnhance\Base;
 
 final class Input
 {
-    //TODO как его лучше реализовать
+    private array $fields = [];
+
+    public function getFields(): array{
+        return $this->fields;
+    }
+
+    public function setField(string $key, mixed $value): void {
+        $this->fields[$key] = $value;
+    }
 }

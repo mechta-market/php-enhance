@@ -14,11 +14,11 @@ abstract class Usecase
         $this->output = new Output();
     }
 
-    public function setInput(Input $input): void {
+    final public function setInput(Input $input): void {
         $this->input = $input;
     }
 
-    public function getOutput(): Output {
+    final public function getOutput(): Output {
         $this->output->setErrors($this->getErrorsMessages());
 
         return $this->output;
