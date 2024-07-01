@@ -2,21 +2,13 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
+use MechtaMarket\PhpEnhance\Interfaces\OutputFormatInterface;
+
 final class Output
 {
     private bool $result = false;
     private array $errors = [];
-    protected ?array $data = [];
-
-    public function setDataField(string $key, $value): void
-    {
-        $this->data[$key] = $value;
-    }
-
-    public function setData($data): void
-    {
-        $this->data = $data;
-    }
+    protected OutputFormatInterface $format;
 
     public function isSuccess(): bool
     {
@@ -26,11 +18,6 @@ final class Output
     public function isFailed(): bool
     {
         return ! $this->isSuccess();
-    }
-
-    public function getData(): ?array
-    {
-        return $this->data;
     }
 
     public function getErrors(): array
@@ -48,12 +35,17 @@ final class Output
         return [
             'result' => $this->result,
             'errors' => $this->errors,
-            'data' => $this->getData()
+            'data' => $this->format->getData()
         ];
     }
 
     public function getJsonResponse(): string
     {
         return json_encode($this->getArrayResponse());
+    }
+
+    public function setFormat(OutputFormatInterface $format): void
+    {
+        $this->format = $format;
     }
 }
