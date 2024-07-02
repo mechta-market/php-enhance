@@ -2,7 +2,7 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
-use MechtaMarket\PhpEnhance\Interfaces\OutputFormatInterface;
+use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
 use MechtaMarket\PhpEnhance\Traits\Errors;
 
 abstract class Usecase
@@ -10,6 +10,7 @@ abstract class Usecase
     use Errors;
     private Output $output;
     private Input $input;
+    private UsecaseDataInterface $data;
 
     public function __construct(){
         $this->output = new Output();
@@ -18,20 +19,13 @@ abstract class Usecase
     final public function getOutput(): Output {
         $this->output->setErrors($this->getErrorsMessages());
 
-        $this->setFormatInOutput();
+        $this->setDataInOutput();
 
         return $this->output;
     }
 
-    private function setFormatInOutput(): void {
-        $format = new class implements OutputFormatInterface{
-            public function getData(): array
-            {
-                return [];
-            }
-        };
-
-        $this->output->setFormat($format);
+    private function setDataInOutput(): void {
+        $this->output->setUsecaseData($this->data);
     }
 
     final public function setInput(Input $input): void {

@@ -2,13 +2,14 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
-use MechtaMarket\PhpEnhance\Interfaces\OutputFormatInterface;
+use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
 
 final class Output
 {
     private bool $result = false;
     private array $errors = [];
-    protected OutputFormatInterface $format;
+    protected ?int $code = null;
+    protected UsecaseDataInterface $usecaseData;
 
     public function isSuccess(): bool
     {
@@ -18,6 +19,16 @@ final class Output
     public function isFailed(): bool
     {
         return ! $this->isSuccess();
+    }
+
+    public function setResult(bool $result): bool
+    {
+        return $this->result = $result;
+    }
+
+    public function getResult(): bool
+    {
+        return $this->result;
     }
 
     public function getErrors(): array
@@ -30,12 +41,23 @@ final class Output
         $this->errors = $errors;
     }
 
+    public function setCode(int $code): void
+    {
+        $this->code = $code;
+    }
+
+    public function getCode(): int
+    {
+        return $this->code;
+    }
+
     public function getArrayResponse(): array
     {
         return [
-            'result' => $this->result,
-            'errors' => $this->errors,
-            'data' => $this->format->getData()
+            'result' => $this->getResult(),
+            'errors' => $this->getErrors(),
+            'code' => $this->getCode(),
+            'data' => $this->usecaseData->getData()
         ];
     }
 
@@ -44,8 +66,8 @@ final class Output
         return json_encode($this->getArrayResponse());
     }
 
-    public function setFormat(OutputFormatInterface $format): void
+    public function setUsecaseData(UsecaseDataInterface $usecaseData): void
     {
-        $this->format = $format;
+        $this->usecaseData = $usecaseData;
     }
 }
