@@ -14,6 +14,7 @@ abstract class Usecase
 
     public function __construct(){
         $this->output = new Output();
+        $this->setData();
     }
 
     final public function getOutput(): Output {
@@ -33,4 +34,9 @@ abstract class Usecase
     }
 
     abstract public function execute(): void;
+
+    private function setData(): void
+    {
+        $this->data = new UsecaseData();
+    }
 }
