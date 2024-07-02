@@ -4,7 +4,7 @@ namespace MechtaMarket\PhpEnhance\Base;
 
 use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
 
-final class Output
+final class BaseOutput
 {
     private bool $result = false;
     private array $errors = [];

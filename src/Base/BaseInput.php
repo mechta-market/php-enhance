@@ -2,7 +2,7 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
-abstract class Input
+abstract class BaseInput
 {
 
 }
