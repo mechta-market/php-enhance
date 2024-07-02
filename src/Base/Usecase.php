@@ -35,7 +35,7 @@ abstract class Usecase
 
     abstract public function execute(): void;
 
-    private function setData(): void
+    protected function setData(): void
     {
         $this->data = new UsecaseData();
     }
