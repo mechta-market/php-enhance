@@ -11,7 +11,7 @@ use Iterator;
  * Class BaseCollection
  * @package App\Infrastructure\Collections
  */
-class BaseCollection implements ArrayAccess, Iterator, Countable
+class Collection implements ArrayAccess, Iterator, Countable
 {
     /** @var array */
     protected array $items = [];
