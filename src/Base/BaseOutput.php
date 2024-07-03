@@ -2,18 +2,18 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
+use MechtaMarket\PhpEnhance\Collections\ErrorCollection;
 use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
 
 final class BaseOutput
 {
-    private bool $result = false;
-    private array $errors = [];
+    private ErrorCollection $errors;
     protected ?int $code = null;
     protected UsecaseDataInterface $usecaseData;
 
     public function isSuccess(): bool
     {
-        return $this->result;
+        return $this->getResult();
     }
 
     public function isFailed(): bool
@@ -21,22 +21,17 @@ final class BaseOutput
         return ! $this->isSuccess();
     }
 
-    public function setResult(bool $result): bool
-    {
-        return $this->result = $result;
-    }
-
     public function getResult(): bool
     {
-        return $this->result;
+        return $this->getCode() === 200;
     }
 
-    public function getErrors(): array
+    public function getErrors(): ErrorCollection
     {
         return $this->errors;
     }
 
-    public function setErrors(array $errors): void
+    public function setErrors(ErrorCollection $errors): void
     {
         $this->errors = $errors;
     }
@@ -48,16 +43,16 @@ final class BaseOutput
 
     public function getCode(): int
     {
-        return $this->code;
+        return $this->getErrors()->isEmpty() ? 200 : $this->getErrors()->first()->getCode();
     }
 
     public function getArrayResponse(): array
     {
         return [
             'result' => $this->getResult(),
-            'errors' => $this->getErrors(),
+            'errors' => $this->getErrors()->getMessages(),
             'code' => $this->getCode(),
-            'data' => $this->usecaseData->getData()
+            'data' => $this->isSuccess() ? $this->usecaseData->getData() : null,
         ];
     }
 

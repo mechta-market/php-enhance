@@ -2,23 +2,24 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
+use MechtaMarket\PhpEnhance\Collections\ErrorCollection;
 use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
-use MechtaMarket\PhpEnhance\Traits\Errors;
 
 abstract class BaseUsecase
 {
-    use Errors;
     private BaseOutput $output;
-    private BaseInput $input;
-    private UsecaseDataInterface $data;
+    protected BaseInput $input;
+    protected UsecaseDataInterface $data;
+    protected ErrorCollection $errors;
 
     public function __construct(){
         $this->output = new BaseOutput();
+        $this->errors = new ErrorCollection();
         $this->setData();
     }
 
     final public function getOutput(): BaseOutput {
-        $this->output->setErrors($this->getErrorsMessages());
+        $this->output->setErrors($this->errors);
 
         $this->setDataInOutput();
 
@@ -31,6 +32,10 @@ abstract class BaseUsecase
 
     final public function setInput(BaseInput $input): void {
         $this->input = $input;
+    }
+
+    final public function getInput(): BaseInput {
+        return $this->input;
     }
 
     abstract public function execute(): void;

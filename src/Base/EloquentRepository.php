@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use MechtaMarket\PhpEnhance\Interfaces\Repository\RepositoryInterface;
 
-abstract class BaseEloquentRepository implements RepositoryInterface
+abstract class EloquentRepository implements RepositoryInterface
 {
     protected Model $model;
 
