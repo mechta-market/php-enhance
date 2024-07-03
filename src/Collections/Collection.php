@@ -175,4 +175,9 @@ class Collection implements ArrayAccess, Iterator, Countable
     {
         return $this->items;
     }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
 }
