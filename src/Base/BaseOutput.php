@@ -2,13 +2,13 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
-use MechtaMarket\PhpEnhance\Collections\ErrorCollection;
+use MechtaMarket\PhpEnhance\Collections\OutputErrorCollection;
 use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
 
 final class BaseOutput
 {
-    private ErrorCollection $errors;
-    protected ?int $code = null;
+    private OutputErrorCollection $errors;
+    protected ?int $statusCode = null;
     protected UsecaseDataInterface $usecaseData;
 
     public function isSuccess(): bool
@@ -23,27 +23,22 @@ final class BaseOutput
 
     public function getResult(): bool
     {
-        return $this->getCode() === 200;
+        return $this->getStatusCode() === 200;
     }
 
-    public function getErrors(): ErrorCollection
+    public function getErrors(): OutputErrorCollection
     {
         return $this->errors;
     }
 
-    public function setErrors(ErrorCollection $errors): void
+    public function setErrors(OutputErrorCollection $errors): void
     {
         $this->errors = $errors;
     }
 
-    public function setCode(int $code): void
+    public function getStatusCode(): int
     {
-        $this->code = $code;
-    }
-
-    public function getCode(): int
-    {
-        return $this->getErrors()->isEmpty() ? 200 : $this->getErrors()->first()->getCode();
+        return $this->getErrors()->isEmpty() ? 200 : $this->getErrors()->first()->getStatusCode();
     }
 
     public function getArrayResponse(): array
@@ -51,14 +46,9 @@ final class BaseOutput
         return [
             'result' => $this->getResult(),
             'errors' => $this->getErrors()->getMessages(),
-            'code' => $this->getCode(),
+            'code' => $this->getStatusCode(),
             'data' => $this->isSuccess() ? $this->usecaseData->getData() : null,
         ];
-    }
-
-    public function getJsonResponse(): string
-    {
-        return json_encode($this->getArrayResponse());
     }
 
     public function setUsecaseData(UsecaseDataInterface $usecaseData): void

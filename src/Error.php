@@ -2,15 +2,15 @@
 
 namespace MechtaMarket\PhpEnhance;
 
-readonly class Error
+class Error
 {
-    public function __construct(private string $message, private int $code = 500) {}
+    public function __construct(private readonly string $message, private readonly \Throwable|null $object = null) {}
 
     public function getMessage(): string {
         return $this->message;
     }
 
-    public function getCode(): int {
-        return $this->code;
+    public function getObject(): \Throwable|null {
+        return $this->object;
     }
 }

@@ -9,5 +9,5 @@ namespace MechtaMarket\PhpEnhance\Interfaces;
  */
 interface UsecaseDataInterface
 {
-    public function getData(): array;
+    public function getData(): ?array;
 }
