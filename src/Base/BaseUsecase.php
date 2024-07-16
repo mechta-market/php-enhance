@@ -2,9 +2,9 @@
 
 namespace MechtaMarket\PhpEnhance\Base;
 
-use MechtaMarket\PhpEnhance\Collections\ErrorCollection;
 use MechtaMarket\PhpEnhance\Collections\OutputErrorCollection;
 use MechtaMarket\PhpEnhance\Interfaces\UsecaseDataInterface;
+use Psr\Log\LoggerInterface;
 
 abstract class BaseUsecase
 {
@@ -13,7 +13,7 @@ abstract class BaseUsecase
     protected UsecaseDataInterface $data;
     protected OutputErrorCollection $errors;
 
-    public function __construct(){
+    public function __construct(protected LoggerInterface $logger){
         $this->output = new BaseOutput();
         $this->errors = new OutputErrorCollection();
         $this->setData();
