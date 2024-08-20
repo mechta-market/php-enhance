@@ -18,13 +18,15 @@
 ### Collection
 базовый класс для работы с массивами, примеры в ErrorCollection.php, OutputErrorCollection.php
 
+### Логирование
+Используйте любой логгер соответствующий `Psr\Log\LoggerInterface`, подгружается в юскейс через конструктор
+
 ### Пример использования Usecase в контроллере
 ```php
-public function index(Request $request)
+public function index(Request $request, SomeUsecase $usecase)
 {
     $input = new SomeInput($request->get('product_id'));
 
-    $usecase = new SomeUsecase();
     $usecase->setInput($input);
 
     $usecase->execute();
